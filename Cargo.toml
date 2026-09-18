@@ -1,0 +1,19 @@
+[package]
+name = "reading-time"
+version = "0.1.0"
+edition = "2021"
+description = "Medium-style reading time estimates for text piped in on stdin"
+license = "MIT"
+
+[[bin]]
+name = "readtime"
+path = "src/main.rs"
+
+[lib]
+name = "reading_time"
+path = "src/lib.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+strip = true
