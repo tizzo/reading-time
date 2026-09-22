@@ -33,15 +33,18 @@ jobs:
       - name: Test
         run: cargo test --locked -- --nocapture
 
-  clippy:
-    name: clippy
+  lint:
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
         with:
-          components: clippy
+          components: rustfmt, clippy
+
+      - name: Format
+        run: cargo fmt --all --check
 
       - name: Clippy
         run: cargo clippy --locked --all-targets -- -D warnings

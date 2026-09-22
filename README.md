@@ -149,7 +149,18 @@ text inside macros, has no equivalent here.
 
 ## Development
 
+Run all three before every commit, in this order:
+
 ```console
-cargo test
-cargo clippy --all-targets
+cargo fmt --all
+cargo clippy --locked --all-targets -- -D warnings
+cargo test --locked
 ```
+
+`cargo fmt --all` rewrites files, so run it first and commit what it changes.
+
+CI enforces the same three checks — as `cargo fmt --all --check` — on every
+pull request and every push to `main`, with the tests running on Linux, macOS,
+and Windows. A push to `main` that passes them publishes fresh binaries for
+five targets to the rolling [`latest`
+release](https://github.com/tizzo/reading-time/releases/tag/latest).

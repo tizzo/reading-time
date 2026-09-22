@@ -17,18 +17,29 @@ env:
   RELEASE_TAG: latest
 
 jobs:
-  # Gate: nothing is published unless the suite is green.
-  test:
-    name: test
+  # Gate: nothing is published unless format, clippy, and tests are all green.
+  check:
+    name: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+
       - uses: dtolnay/rust-toolchain@stable
-      - run: cargo test --locked
+        with:
+          components: rustfmt, clippy
+
+      - name: Format
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --locked --all-targets -- -D warnings
+
+      - name: Test
+        run: cargo test --locked
 
   build:
     name: build (${{ matrix.target }})
-    needs: test
+    needs: check
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
