@@ -174,7 +174,7 @@ struct Extracted {
     images: usize,
 }
 
-fn looks_like_html(input: &str) -> bool {
+fn looks_like_html(input:&str)->bool{
     let probe: String = input.chars().take(4096).collect::<String>().to_lowercase();
     [
         "<p>", "<p ", "<div", "<br", "<img", "<span", "<h1", "<h2", "<li", "<table", "</",
