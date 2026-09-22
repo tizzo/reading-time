@@ -176,9 +176,11 @@ struct Extracted {
 
 fn looks_like_html(input: &str) -> bool {
     let probe: String = input.chars().take(4096).collect::<String>().to_lowercase();
-    ["<p>", "<p ", "<div", "<br", "<img", "<span", "<h1", "<h2", "<li", "<table", "</"]
-        .iter()
-        .any(|tag| probe.contains(tag))
+    [
+        "<p>", "<p ", "<div", "<br", "<img", "<span", "<h1", "<h2", "<li", "<table", "</",
+    ]
+    .iter()
+    .any(|tag| probe.contains(tag))
 }
 
 /// Removes Markdown syntax that is not read aloud: image alt text and link
@@ -579,14 +581,18 @@ mod tests {
 
     #[test]
     fn entities_become_text() {
-        let est = estimate("<p>salt&nbsp;and&nbsp;pepper &amp; more</p>", &Options::default());
+        let est = estimate(
+            "<p>salt&nbsp;and&nbsp;pepper &amp; more</p>",
+            &Options::default(),
+        );
         // nbsp splits the words; the bare "&" is punctuation, not a word.
         assert_eq!(est.words, 4);
     }
 
     #[test]
     fn skip_code_drops_fenced_blocks() {
-        let md = "Intro words here\n\n```rust\nfn main() { println!(\"lots of code\"); }\n```\n\nOutro";
+        let md =
+            "Intro words here\n\n```rust\nfn main() { println!(\"lots of code\"); }\n```\n\nOutro";
         let kept = estimate(md, &Options::default());
         let skipped = estimate(
             md,
@@ -675,7 +681,10 @@ mod tests {
 
     #[test]
     fn footnote_markers_ride_along_with_their_word() {
-        let est = estimate("<p>Boiling water<sup>1</sup> matters</p>", &Options::default());
+        let est = estimate(
+            "<p>Boiling water<sup>1</sup> matters</p>",
+            &Options::default(),
+        );
         assert_eq!(est.words, 3);
     }
 
@@ -736,7 +745,10 @@ mod tests {
 
     #[test]
     fn numeric_and_unknown_entities_are_not_words() {
-        let est = estimate("<p>one two &#8212; three &hellip; four</p>", &Options::default());
+        let est = estimate(
+            "<p>one two &#8212; three &hellip; four</p>",
+            &Options::default(),
+        );
         assert_eq!(est.words, 4);
     }
 
@@ -754,7 +766,10 @@ mod tests {
 
     #[test]
     fn unterminated_comment_ignores_the_remainder() {
-        let est = estimate("<p>one two</p><!-- dangling words here", &Options::default());
+        let est = estimate(
+            "<p>one two</p><!-- dangling words here",
+            &Options::default(),
+        );
         assert_eq!(est.words, 2);
     }
 
