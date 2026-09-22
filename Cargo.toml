@@ -1,16 +1,16 @@
 [package]
-name = "reading-time"
+name = "read-time"
 version = "0.1.0"
 edition = "2021"
 description = "Medium-style reading time estimates for text piped in on stdin"
 license = "MIT"
 
 [[bin]]
-name = "readtime"
+name = "read-time"
 path = "src/main.rs"
 
 [lib]
-name = "reading_time"
+name = "read_time"
 path = "src/lib.rs"
 
 [profile.release]

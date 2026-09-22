@@ -1,14 +1,14 @@
 use std::io::{self, Read, Write};
 use std::process::ExitCode;
 
-use reading_time::{estimate, Estimate, Format, Options, DEFAULT_CJK_CPM, DEFAULT_WPM};
+use read_time::{estimate, Estimate, Format, Options, DEFAULT_CJK_CPM, DEFAULT_WPM};
 
 const USAGE: &str = "\
-readtime — Medium-style reading time estimates
+read-time — Medium-style reading time estimates
 
 USAGE:
-    cat article.md | readtime [OPTIONS]
-    readtime [OPTIONS] [FILE]...
+    cat article.md | read-time [OPTIONS]
+    read-time [OPTIONS] [FILE]...
 
 OPTIONS:
     -w, --wpm <N>        Words per minute (default: 265, Medium's figure)
@@ -54,8 +54,8 @@ fn main() -> ExitCode {
         Ok(Some(config)) => config,
         Ok(None) => return ExitCode::SUCCESS,
         Err(msg) => {
-            eprintln!("readtime: {msg}");
-            eprintln!("Try 'readtime --help' for more information.");
+            eprintln!("read-time: {msg}");
+            eprintln!("Try 'read-time --help' for more information.");
             return ExitCode::from(2);
         }
     };
@@ -63,7 +63,7 @@ fn main() -> ExitCode {
     match run(&config) {
         Ok(()) => ExitCode::SUCCESS,
         Err(msg) => {
-            eprintln!("readtime: {msg}");
+            eprintln!("read-time: {msg}");
             ExitCode::FAILURE
         }
     }
@@ -267,7 +267,7 @@ fn parse_args(args: &[String]) -> Result<Option<Config>, String> {
                 return Ok(None);
             }
             "-V" | "--version" => {
-                println!("readtime {}", env!("CARGO_PKG_VERSION"));
+                println!("read-time {}", env!("CARGO_PKG_VERSION"));
                 return Ok(None);
             }
             "-w" | "--wpm" => {

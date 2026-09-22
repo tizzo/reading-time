@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "reading-time"
+name = "read-time"
 version = "0.1.0"

@@ -1,10 +1,10 @@
-# readtime
+# read-time
 
 A `wc`-shaped CLI that estimates how long a piece of text takes to read, using
 Medium's published read-time formula.
 
 ```console
-$ cat article.md | readtime
+$ cat article.md | read-time
 7 min read
 ```
 
@@ -17,8 +17,8 @@ cargo install --path .    # or: cargo build --release
 ## Usage
 
 ```
-cat article.md | readtime [OPTIONS]
-readtime [OPTIONS] [FILE]...
+cat article.md | read-time [OPTIONS]
+read-time [OPTIONS] [FILE]...
 
 -w, --wpm <N>        Words per minute (default: 265, Medium's figure)
     --cjk-cpm <N>    Characters per minute for CJK text (default: 500)
@@ -36,12 +36,12 @@ With no `FILE`, or with `FILE` of `-`, it reads standard input. Several files
 are reported one per line with a total, like `wc`.
 
 ```console
-$ readtime -v posts/*.md
+$ read-time -v posts/*.md
 3 min read  posts/one.md
   742 words at 265 wpm, 2 images  (191.0s total)
 ...
 
-$ cat article.md | readtime --json
+$ cat article.md | read-time --json
 {"minutes":7,"seconds":382.19,"words":1602,"cjk_chars":0,"images":4,"wpm":265,"text":"7 min read"}
 ```
 
